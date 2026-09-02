@@ -1,0 +1,39 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: document-domain=(), camera=(), microphone=()
+  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1
+
+# Cache icons permanently on Cloudflare CDN edge
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+
+# Cache single source-of-truth metadata file with stale-while-revalidate
+/icons.json
+  Cache-Control: public, max-age=60, stale-while-revalidate=86400
+  Access-Control-Allow-Origin: *
+
+# Cache build assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Sitemap — no-cache to ensure freshness
+/sitemap.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: application/xml; charset=utf-8
+
+# Robots.txt — short cache
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+# Manifest — short cache
+/manifest.json
+  Cache-Control: public, max-age=86400
+  Content-Type: application/manifest+json
+
+# RSS Feed — short cache so crawlers pick up new icons
+/feed.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+  Content-Type: application/rss+xml; charset=utf-8

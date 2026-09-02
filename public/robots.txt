@@ -1,0 +1,60 @@
+User-agent: *
+Allow: /
+Allow: /icon/
+Allow: /category/
+Allow: /icons/
+Allow: /assets/
+Allow: /sitemap.xml
+Allow: /feed.xml
+Allow: /robots.txt
+Allow: /manifest.json
+Disallow: /dist/
+Crawl-delay: 0
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /icons/
+Allow: /assets/
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+Host: https://svgspace.sbs
+
+Sitemap: https://svgspace.sbs/sitemap.xml
+Sitemap: https://svgspace.sbs/feed.xml

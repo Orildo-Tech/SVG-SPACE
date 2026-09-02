@@ -1,0 +1,66 @@
+{
+  "name": "SVGSpace — Free SVG Icons & Brand Logo Library",
+  "short_name": "SVGSpace",
+  "description": "6,517+ free brand logos, developer icons & Liquid Glass SVG vectors. Instant React JSX, Vue 3, Svelte, Angular, PNG & SVG XML export. Zero tracking. Apache 2.0.",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#FF5F02",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["design", "developer tools", "utilities", "productivity"],
+  "id": "svgspace-sbs",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/assets/logo-light.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Icons",
+      "short_name": "Search",
+      "description": "Jump directly to icon search",
+      "url": "/?source=shortcut",
+      "icons": [{ "src": "/assets/logo-light.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Browse Categories",
+      "short_name": "Categories",
+      "description": "Browse all SVG icon categories",
+      "url": "/?view=categories&source=shortcut",
+      "icons": [{ "src": "/assets/logo-light.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Submit an Icon",
+      "short_name": "Submit",
+      "description": "Contribute an SVG icon to the library",
+      "url": "/?view=submit&source=shortcut",
+      "icons": [{ "src": "/assets/logo-light.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Saved Favorites",
+      "short_name": "Favorites",
+      "description": "View saved favorites",
+      "url": "/?view=favorites&source=shortcut",
+      "icons": [{ "src": "/assets/logo-light.svg", "sizes": "any" }]
+    }
+  ]
+}

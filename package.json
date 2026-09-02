@@ -1,0 +1,26 @@
+{
+  "name": "orildo-svg",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@hummingbirdui/hummingbird": "^1.4.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "file-saver": "^2.0.5",
+    "fuse.js": "^7.5.0",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.475.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.1.0"
+  }
+}
