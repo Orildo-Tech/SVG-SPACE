@@ -89,7 +89,7 @@ export function IconModal({
   const vueCode = convertSvgToVue(svgContent);
   const svelteCode = convertSvgToSvelte(svgContent);
   const dataUri = convertSvgToDataUri(svgContent);
-  const cdnUrl = `https://svg.io.orildo.tech/icons/${icon.id}/${selectedVariant}.svg`;
+  const cdnUrl = `https://svgspace.sbs/icons/${icon.id}/${selectedVariant}.svg`;
 
   const getActiveCode = () => {
     switch (activeTab) {

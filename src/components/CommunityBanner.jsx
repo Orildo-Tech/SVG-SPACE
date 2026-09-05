@@ -25,7 +25,7 @@ export function CommunityBanner({
             Submit an Icon
           </button>
           <a
-            href="https://github.com/Orildo-Tech/SVG-IO"
+            href="https://github.com/Orildo-Tech/SVG-SPACE"
             target="_blank"
             rel="noopener noreferrer"
             className="md-community-btn-dark">

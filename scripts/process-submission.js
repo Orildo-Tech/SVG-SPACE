@@ -63,7 +63,7 @@ function downloadFile(urlStr, destPath) {
       port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
       path: parsedUrl.pathname + parsedUrl.search,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Node/SVG-IO)',
+        'User-Agent': 'Mozilla/5.0 (Node/SVG-SPACE)',
         'apikey': anonKey,
         'Authorization': `Bearer ${anonKey}`
       }

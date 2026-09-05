@@ -23,9 +23,9 @@ export function Footer({
         {}
         <div className="md-footer-brand-col">
           <a
-            href="https://svg.io.orildo.tech"
+            href="https://svgspace.sbs"
             className="md-footer-logo-row"
-            title="Visit SvgIo">
+            title="Visit SVGSpace">
             
             <img
               src={wordmarkSrc}
@@ -44,7 +44,7 @@ export function Footer({
           </span>
 
           <div className="md-footer-eco-badges">
-            <a href="https://github.com/Orildo-Tech/SVG-IO" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="GitHub">
+            <a href="https://github.com/Orildo-Tech/SVG-SPACE" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="GitHub">
               <Github size={14} />
             </a>
             <a href="https://orildo.dev" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="Orildo Official">
@@ -85,7 +85,7 @@ export function Footer({
             <li><button onClick={() => onNavigate?.('info')}>About Platform</button></li>
             <li><button onClick={() => onNavigate?.('status')}>System Status</button></li>
             <li><button onClick={() => onNavigate?.('404')}>404 Preview</button></li>
-            <li><a href="https://github.com/Orildo-Tech/SVG-IO/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribution Specs</a></li>
+            <li><a href="https://github.com/Orildo-Tech/SVG-SPACE/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribution Specs</a></li>
             <li><button onClick={() => onNavigate?.('terms')}>Vector Licensing</button></li>
           </ul>
         </div>
@@ -93,10 +93,10 @@ export function Footer({
         <div className="md-footer-nav-col">
           <h4 className="md-footer-col-title">COMMUNITY</h4>
           <ul className="md-footer-links">
-            <li><a href="https://github.com/Orildo-Tech/SVG-IO" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a href="https://github.com/Orildo-Tech/SVG-IO/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-            <li><a href="https://github.com/Orildo-Tech/SVG-IO/discussions" target="_blank" rel="noopener noreferrer">Discussions</a></li>
-            <li><a href="https://github.com/Orildo-Tech/SVG-IO/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></li>
+            <li><a href="https://github.com/Orildo-Tech/SVG-SPACE" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a href="https://github.com/Orildo-Tech/SVG-SPACE/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+            <li><a href="https://github.com/Orildo-Tech/SVG-SPACE/discussions" target="_blank" rel="noopener noreferrer">Discussions</a></li>
+            <li><a href="https://github.com/Orildo-Tech/SVG-SPACE/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></li>
           </ul>
         </div>
 
@@ -121,7 +121,7 @@ export function Footer({
         <div className="md-credits-section">
           <span className="md-credits-label">POWERED BY</span>
           <a
-            href="https://orildo.dev"
+            href="https://orildo.tech"
             target="_blank"
             rel="noopener noreferrer"
             className="md-credits-chip"

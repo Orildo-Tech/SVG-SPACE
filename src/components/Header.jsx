@@ -263,7 +263,7 @@ export function Header({
 
           {}
           <a
-            href="https://github.com/Orildo-Tech/SVG-IO"
+            href="https://github.com/Orildo-Tech/SVG-SPACE"
             target="_blank"
             rel="noopener noreferrer"
             className="md-icon-btn github-btn"

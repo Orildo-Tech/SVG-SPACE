@@ -298,7 +298,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
               <span className="sv-share-label">SHARE</span>
               <div className="sv-share-buttons-stack">
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(activePost.title)}&url=${encodeURIComponent('https://svg.io.orildo.tech')}`}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(activePost.title)}&url=${encodeURIComponent('https://svgspace.sbs')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sv-share-icon-btn"
@@ -308,7 +308,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
                 </a>
 
                 <a
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://svg.io.orildo.tech')}`}
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://svgspace.sbs')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sv-share-icon-btn"
@@ -318,7 +318,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
                 </a>
 
                 <a
-                  href={`https://reddit.com/submit?title=${encodeURIComponent(activePost.title)}&url=${encodeURIComponent('https://svg.io.orildo.tech')}`}
+                  href={`https://reddit.com/submit?title=${encodeURIComponent(activePost.title)}&url=${encodeURIComponent('https://svgspace.sbs')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sv-share-icon-btn"
@@ -328,7 +328,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
                 </a>
 
                 <a
-                  href={`https://news.ycombinator.com/submitlink?t=${encodeURIComponent(activePost.title)}&u=${encodeURIComponent('https://svg.io.orildo.tech')}`}
+                  href={`https://news.ycombinator.com/submitlink?t=${encodeURIComponent(activePost.title)}&u=${encodeURIComponent('https://svgspace.sbs')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sv-share-icon-btn"
@@ -364,7 +364,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
               <span>RSS Feed</span>
             </a>
             <a
-              href="https://github.com/Orildo-Tech/SVG-IO"
+              href="https://github.com/Orildo-Tech/SVG-SPACE"
               target="_blank"
               rel="noopener noreferrer"
               className="sv-loop-btn-primary">
@@ -516,7 +516,7 @@ export function BlogPage({ onExploreAll, onNavigate }) {
             <span>RSS Feed</span>
           </a>
           <a
-            href="https://github.com/Orildo-Tech/SVG-IO"
+            href="https://github.com/Orildo-Tech/SVG-SPACE"
             target="_blank"
             rel="noopener noreferrer"
             className="sv-loop-btn-primary">

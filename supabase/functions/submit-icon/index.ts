@@ -51,7 +51,7 @@ serve(async (req: Request) => {
 
     let ghPat = Deno.env.get("GH_PAT") || Deno.env.get("VITE_GH_PAT") || "";
     let ghOwner = Deno.env.get("GH_OWNER") || Deno.env.get("VITE_GH_OWNER") || "";
-    let ghRepo = Deno.env.get("GH_REPO") || Deno.env.get("VITE_GH_REPO") || "SVG-IO";
+    let ghRepo = Deno.env.get("GH_REPO") || Deno.env.get("VITE_GH_REPO") || "SVG-SPACE";
 
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_ANON_KEY") || "";
@@ -150,7 +150,7 @@ serve(async (req: Request) => {
             Authorization: `Bearer ${ghPat}`,
             Accept: "application/vnd.github.v3+json",
             "Content-Type": "application/json",
-            "User-Agent": "SVG-IO-Supabase-Edge-Function/1.0",
+            "User-Agent": "SVG-SPACE-Supabase-Edge-Function/1.0",
           },
           body: JSON.stringify({
             event_type: "process-icon-submission",

@@ -219,7 +219,7 @@ export function InfoPage({
           </button>
 
           <a
-            href="https://github.com/Orildo-Tech/SVG-IO"
+            href="https://github.com/Orildo-Tech/SVG-SPACE"
             target="_blank"
             rel="noopener noreferrer"
             className="sv-info-btn-ghost">

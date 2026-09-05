@@ -1102,7 +1102,7 @@ export function SubmitPage({
           {}
           <div className="sv-repo-links-row">
             <a
-              href="https://github.com/Orildo-Tech/SVG-IO"
+              href="https://github.com/Orildo-Tech/SVG-SPACE"
               target="_blank"
               rel="noopener noreferrer"
               className="sv-repo-action-btn">
@@ -1112,7 +1112,7 @@ export function SubmitPage({
               <ExternalLink size={12} />
             </a>
             <a
-              href="https://github.com/Orildo-Tech/SVG-IO/issues"
+              href="https://github.com/Orildo-Tech/SVG-SPACE/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="sv-repo-action-btn">
