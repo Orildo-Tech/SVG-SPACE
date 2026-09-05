@@ -1,11 +1,16 @@
 <div align="center">
-  <img src="public/assets/github.svg" alt="SVG-SPACE Preview" width="500">
+  <img src="public/assets/github.svg" alt="SVG-SPACE logo" width="500">
 </div>
 
 
 # SVG-SPACE
 
 A free, open-source SVG hosting, publishing, and distribution platform. Upload individual icons or complete multi-variant icon packs with automated processing, live preview pages, NPM package distribution, and global CDN delivery.
+
+
+<div align="center">
+  <img src="public/assets/prev.png" alt="SVG-SPACE Preview" width="800">
+</div>
 
 ## Features
 
