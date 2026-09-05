@@ -156,7 +156,8 @@ public/icons/
 │   ├── mono.svg
 │   ├── dark.svg
 │   ├── light.svg
-│   └── wordmark.svg
+│   ├── wordmark.svg
+│   └── github.svg
 ```
 
 ### 2. Update Icon Metadata
