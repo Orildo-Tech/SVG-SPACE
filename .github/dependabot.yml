@@ -1,6 +1,5 @@
 version: 2
 updates:
-  # Enable version updates for npm dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -47,21 +46,18 @@ updates:
           - "jszip"
           - "fuse.js"
 
-  # Enable Docker updates if Docker is added in the future
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-streams-limit: 5
 
-  # Enable GitHub Actions updates
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 3
 
-# Configure commit message preferences
 commit-message:
   prefix: "chore"
   include: "scope:"
