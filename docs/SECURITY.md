@@ -2,6 +2,12 @@
 
 This document outlines the security practices and procedures for SVG-SPACE.
 
+## Security Contact
+
+For security vulnerabilities, email: **security@orildo.tech**
+
+Do not create GitHub issues for security vulnerabilities.
+
 ## Reporting Security Issues
 
 If you discover a security vulnerability, please report it responsibly rather than creating a public issue.
@@ -16,6 +22,14 @@ Include the following information:
 - Steps to reproduce the issue
 - Potential impact of the vulnerability
 - Any suggested fixes or mitigations
+
+### Visibility
+
+This security policy is referenced in:
+- Main project README.md
+- GitHub repository security settings
+- Platform website (under Privacy/Policy section)
+- Documentation index in docs/ folder
 
 ### Response Timeline
 

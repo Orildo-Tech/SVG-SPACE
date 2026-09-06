@@ -125,6 +125,10 @@ We welcome contributions. Guidelines for contributing:
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
+## Security
+
+For security vulnerabilities, please email security@orildo.tech instead of creating GitHub issues. See the [Security Policy](docs/SECURITY.md) for detailed information.
+
 ## Support
 
 - GitHub Issues: https://github.com/Orildo-Tech/SVG-SPACE/issues
