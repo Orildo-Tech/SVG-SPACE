@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thank you for your interest in contributing to SVG SPACE. This document provides guidelines and instructions for contributing to the project.
+Thank you for your interest in contributing to SVG-SPACE. This document provides guidelines and instructions for contributing to the project.
 
 ## Getting Started
 ### Requirements

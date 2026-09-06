@@ -48,15 +48,10 @@ dist
 Add the following environment variables in Cloudflare Pages settings:
 
 ```env
-
 VITE_DATABASE_URL=https://your-project.supabase.co
-
 VITE_DATABASE_KEY=your-supabase-anon-key
-
 SUPABASE_URL=https://your-project.supabase.co
-
 SUPABASE_ANON_KEY=your-supabase-anon-key
-
 ```
 
 ### 5. Deploy
