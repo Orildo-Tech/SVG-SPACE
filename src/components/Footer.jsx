@@ -40,14 +40,14 @@ export function Footer({
           </p>
 
           <span className="md-footer-project-tag">
-            Powered by <a href="https://orildo.dev" target="_blank" rel="noopener noreferrer" style={{ color: '#FF5F02', fontWeight: 700 }}>Orildo</a>
+            Powered by <a href="https://orildo.tech" target="_blank" rel="noopener noreferrer" style={{ color: '#FF5F02', fontWeight: 700 }}>Orildo</a>
           </span>
 
           <div className="md-footer-eco-badges">
             <a href="https://github.com/Orildo-Tech/SVG-SPACE" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="GitHub">
               <Github size={14} />
             </a>
-            <a href="https://orildo.dev" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="Orildo Official">
+            <a href="https://orildo.tech" target="_blank" rel="noopener noreferrer" className="md-eco-badge" title="Orildo Official">
               <img src={orildoIconSrc} alt="Orildo" width="14" height="14" style={{ objectFit: 'contain' }} />
             </a>
           </div>
@@ -131,8 +131,8 @@ export function Footer({
               <img src={orildoIconSrc} alt="Orildo" width="22" height="22" style={{ objectFit: 'contain' }} />
             </div>
             <div className="md-credits-info">
-              <span className="md-credits-title">orildo.dev</span>
-              <span className="md-credits-sub">Vector Engine & Design Studio</span>
+              <span className="md-credits-title">Orildo</span>
+              <span className="md-credits-sub">orildo.tech</span>
             </div>
           </a>
         </div>
@@ -164,14 +164,14 @@ export function Footer({
       {}
       <div className="md-footer-bottom-row">
         <span className="md-footer-copy-text">
-          © {new Date().getFullYear()} <a href="https://orildo.dev" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', fontWeight: 600 }}>Orildo</a>. All rights reserved. Developed by <a href="https://sameer.orildo.dev" target="_blank" rel="noopener noreferrer" style={{ color: '#FF5F02', fontWeight: 600 }}>Syed Sameer Ul Hassan</a>.
+          © {new Date().getFullYear()} <a href="https://orildo.tech" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', fontWeight: 600 }}>Orildo</a>. All rights reserved. Developed by <a href="https://sameer.orildo.dev" target="_blank" rel="noopener noreferrer" style={{ color: '#FF5F02', fontWeight: 600 }}>Syed Sameer Ul Hassan</a>.
         </span>
 
         <div className="md-footer-disclaimer">
-          <span>All brand logos and trademarks belong to their respective owners.</span>
-          <a href="#trademark" className="md-footer-sub-link">Trademark Policy</a>
+          <span>All brand logos and trademarks belong to their respective owners.</span> 
           <span>|</span>
-          <span>Built with Orildo Design Studio</span>
+          <a href="#trademark" className="md-footer-sub-link">Trademark Policy</a>
+         
         </div>
       </div>
     </footer>);

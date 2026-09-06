@@ -19,6 +19,6 @@ dist-ssr
 *.sln
 *.sw?
 .env
-# .env.example
 .env.local
 .env.*.local
+package-lock.json

@@ -3,6 +3,12 @@
 Thank you for your interest in contributing to SVG-SPACE. This document provides guidelines and instructions for contributing to the project.
 
 ## Getting Started
+### Requirements
+
+- For contributions of 100+ icons, use the pull request process
+- For contributions of fewer than 100 icons, use the platform submission method
+- SVG files must not contain embedded scripts
+- Provide comprehensive descriptions in pull requests
 
 ### Prerequisites
 
@@ -265,4 +271,4 @@ Please be respectful and constructive in all interactions. Harassment or disresp
 
 If you have questions about contributing that are not covered here, please open a GitHub Discussion or contact the maintainers.
 
-Thank you for contributing to SVG-SPACE!
+Thank you for contributing to SVG-SPACE

@@ -156,8 +156,7 @@ public/icons/
 │   ├── mono.svg
 │   ├── dark.svg
 │   ├── light.svg
-│   ├── wordmark.svg
-│   └── github.svg
+│   └── wordmark.svg
 ```
 
 ### 2. Update Icon Metadata
@@ -230,6 +229,6 @@ After installation, verify your setup:
 
 After successful installation, refer to:
 
-- [Architecture Guide](ARCHITECTURE.md) for system understanding
-- [Contributing Guide](CONTRIBUTING.md) for development workflow
-- [Deployment Guide](DEPLOYMENT.md) for production setup
+- Architecture Guide for system understanding
+- Contributing Guide for development workflow
+- Deployment Guide for production setup

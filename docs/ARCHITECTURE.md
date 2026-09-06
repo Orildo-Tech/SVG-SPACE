@@ -44,30 +44,13 @@ SVG-SPACE/
 │   └── feed.xml              # RSS feed
 ├── src/
 │   ├── components/           # React components
-│   │   ├── Header.jsx       # Navigation header
-│   │   ├── Sidebar.jsx      # Category navigation
-│   │   ├── IconGrid.jsx     # Icon display grid
-│   │   ├── IconDetailPage.jsx # Individual icon page
-│   │   └── ...
 │   ├── styles/              # CSS styles
-│   │   └── index.css        # Main stylesheet
 │   ├── utils/               # Utility functions
-│   │   ├── dbUtils.js       # Database caching
-│   │   ├── exportUtils.js   # Export functionality
-│   │   ├── seoUtils.js      # SEO optimization
-│   │   ├── recolorSvg.js    # SVG color manipulation
-│   │   └── historyUtils.js  # Search history
 │   ├── App.jsx              # Main application component
-│   └── main.jsx             # Application entry point
+│   └── main.jsx             # Entry point
 ├── functions/               # Cloudflare Workers
-│   └── api/
-│       └── submit-icon.js   # Icon submission API
 ├── scripts/                 # Build and processing scripts
-│   └── process-submission.js # Icon processing
 ├── supabase/               # Supabase edge functions
-│   └── functions/
-│       └── submit-icon/
-│           └── index.ts     # Supabase edge function
 ├── index.html              # HTML template
 ├── package.json            # Dependencies
 ├── vite.config.js          # Vite configuration
@@ -255,22 +238,6 @@ Used for:
 - Automated build pipeline
 - Database migration strategy
 - Version compatibility checks
-
-## Future Architecture Considerations
-
-### Planned Improvements
-
-- API versioning for breaking changes
-- Webhook support for real-time updates
-- Enhanced caching strategies
-- Service worker for offline support
-
-### Scalability Enhancements
-
-- Database read replicas
-- Geographic distribution
-- Load balancing strategies
-- Caching layer optimization
 
 ## Design Decisions
 

@@ -258,7 +258,7 @@ import { ReactIcon } from '@orildo/vue';
 
 ## Rate Limiting
 
-Currently, there are no rate limits on public endpoints. Future implementations may include:
+Currently, there are no rate limits on public API endpoints. Future implementations may include:
 
 - 100 requests per minute per IP
 - 1000 requests per hour per IP
