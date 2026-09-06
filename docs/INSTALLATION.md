@@ -1,10 +1,10 @@
 # Installation Guide
 
-This guide provides detailed instructions for setting up the SVG-SPACE development environment and deploying the application.
+This guide provides detailed instructions for setting up the SVG SPACE development environment and deploying the application.
 
 ## Prerequisites
 
-Before installing SVG-SPACE, ensure you have the following:
+Before installing SVG SPACE, ensure you have the following:
 
 - Node.js 18.0 or higher
 - npm 9.0 or higher (or yarn 1.22+)

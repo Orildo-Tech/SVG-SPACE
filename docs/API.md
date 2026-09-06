@@ -1,6 +1,6 @@
 # API Documentation
 
-This document describes the API endpoints and usage for the SVG-SPACE platform.
+This document describes the API endpoints and usage for the SVG SPACE platform.
 
 ## Base URL
 

@@ -1,6 +1,6 @@
-# SVG-SPACE Documentation
+# SVG SPACE Documentation
 
-Welcome to the SVG-SPACE documentation. This section contains comprehensive guides for users, contributors, and developers working with the SVG-SPACE platform.
+Welcome to the SVG SPACE documentation. This section contains comprehensive guides for users, contributors, and developers working with the SVG SPACE platform.
 
 ## Documentation Structure
 

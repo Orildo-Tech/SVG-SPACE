@@ -1,10 +1,10 @@
 # Architecture Documentation
 
-This document describes the system architecture, technical decisions, and design patterns used in SVG-SPACE.
+This document describes the system architecture, technical decisions, and design patterns used in SVG SPACE.
 
 ## System Overview
 
-SVG-SPACE is a modern web application built with a focus on performance, scalability, and developer experience. The architecture follows a client-server model with edge computing capabilities.
+SVG SPACE is a modern web application built with a focus on performance, scalability, and developer experience. The architecture follows a client-server model with edge computing capabilities.
 
 ## Technology Stack
 
