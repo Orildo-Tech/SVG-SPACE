@@ -23,7 +23,7 @@ const title = (process.env.ICON_TITLE || '').trim();
 const slug = (rawSlug || '').toLowerCase().replace(/[^a-z0-9_-]/g, '');
 const hex = (process.env.ICON_HEX || 'FF5F02').replace(/^#/, '');
 const hexes = JSON.parse(process.env.ICON_HEXES || '[]');
-const license = process.env.ICON_LICENSE || 'Apache-2.0';
+const license = process.env.ICON_LICENSE || 'Public Domain';
 const url = process.env.ICON_URL || `https://${slug}.com`;
 const categories = JSON.parse(process.env.ICON_CATEGORIES || '["Software"]');
 const aliases = JSON.parse(process.env.ICON_ALIASES || '[]');
@@ -63,7 +63,7 @@ function downloadFile(urlStr, destPath) {
       port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
       path: parsedUrl.pathname + parsedUrl.search,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Node/SVG-SPACE)',
+        'User-Agent': 'Mozilla/5.0 (Node/SVG-IO)',
         'apikey': anonKey,
         'Authorization': `Bearer ${anonKey}`
       }

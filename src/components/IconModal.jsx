@@ -57,7 +57,7 @@ export function IconModal({
     let isMounted = true;
 
     async function loadSvg() {
-      const text = await getSvgContent(icon.id, selectedVariant);
+      const text = await getSvgContent(icon, selectedVariant);
       if (isMounted && text) {
         setSvgContent(text);
       }
@@ -174,7 +174,7 @@ export function IconModal({
         <div className="md-dialog-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <div style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <img src={`/icons/${icon.id}/${selectedVariant}.svg`} alt={icon.name} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+              <img src={icon?.variantPaths?.[selectedVariant] || `/icons/${icon.id}/${selectedVariant}.svg`} alt={icon.name} style={{ maxHeight: '100%', maxWidth: '100%' }} />
             </div>
             <div>
               <h2 className="md-dialog-title">{icon.name}</h2>
@@ -203,7 +203,7 @@ export function IconModal({
             {}
             <div className={`md-preview-stage bg-${previewBg}`}>
               <img
-                src={`/icons/${icon.id}/${selectedVariant}.svg`}
+                src={icon?.variantPaths?.[selectedVariant] || `/icons/${icon.id}/${selectedVariant}.svg`}
                 alt={icon.name}
                 style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
               

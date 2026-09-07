@@ -1,3 +1,6 @@
+/* ==========================================================================
+   SELF-HOSTED K2D FONT SUITE (DIRECT HARDCODED LOCAL VECTORS)
+   ========================================================================== */
 @font-face {
   font-family: "K2D";
   font-style: normal;
@@ -193,6 +196,7 @@ html {
   -ms-user-select: none;
 }
 
+/* Global Zero-Shadow Protocol - Strict Clean Flat & Glass Finish */
 *,
 *::before,
 *::after {
@@ -220,6 +224,7 @@ body {
     color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Allow text selection inside editable input/textarea fields */
 input,
 textarea,
 [contenteditable="true"] {
@@ -229,6 +234,7 @@ textarea,
   -ms-user-select: text !important;
 }
 
+/* GPU Accelerated Smooth Elements */
 .md-card,
 .md-side-nav-item,
 .md-segment-btn,
@@ -241,6 +247,7 @@ textarea,
   backface-visibility: hidden;
 }
 
+/* Smooth Image & SVG Rendering */
 img,
 svg {
   shape-rendering: geometricPrecision;
@@ -3592,6 +3599,7 @@ a:focus {
   border-color: rgba(15, 23, 42, 0.2);
 }
 
+/* ── Share button (Icon-only, site theme) ──────────── */
 .thesvg-share-btn {
   width: 36px;
   height: 36px;
@@ -9604,9 +9612,194 @@ a:focus {
   flex-shrink: 0;
 }
 
+.sv-license-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #10b981;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sv-license-view-btn:hover {
+  background: rgba(16, 185, 129, 0.28);
+  border-color: rgba(16, 185, 129, 0.55);
+  color: #34d399;
+}
+
+[data-theme="light"] .sv-license-view-btn {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #059669;
+}
+
+[data-theme="light"] .sv-license-view-btn:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.6);
+  color: #047857;
+}
+
 .sv-field-error {
   font-size: 11px;
   color: #ef4444;
+}
+
+/* Contributor Agreements & Warranties Block */
+.sv-agreements-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 95, 2, 0.25);
+  margin-top: 6px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+[data-theme="light"] .sv-agreements-group {
+  background: #f8fafc;
+  border-color: rgba(255, 95, 2, 0.35);
+}
+
+.sv-agreements-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sv-agreements-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.sv-agreements-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+.sv-agreements-subtitle {
+  font-size: 11.5px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.sv-agreements-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(255, 95, 2, 0.15);
+  border: 1px solid rgba(255, 95, 2, 0.35);
+  color: #ff5f02;
+}
+
+.sv-agreements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sv-agreement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+[data-theme="light"] .sv-agreement-item {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+.sv-agreement-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme="light"] .sv-agreement-item:hover {
+  background: #f1f5f9;
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+.sv-agreement-item.checked {
+  background: rgba(16, 185, 129, 0.06);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+[data-theme="light"] .sv-agreement-item.checked {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.sv-agreement-checkbox {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  accent-color: #ff5f02;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sv-agreement-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sv-agreement-heading {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+}
+
+.sv-agreement-desc {
+  font-size: 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.sv-agreement-desc strong {
+  color: var(--md-sys-color-on-surface);
+}
+
+.sv-agreement-desc u {
+  text-decoration-color: rgba(255, 95, 2, 0.6);
+  text-underline-offset: 2px;
+}
+
+.sv-agreements-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 .sv-form-row-2col {
@@ -10418,6 +10611,7 @@ a:focus {
   background: rgba(15, 23, 42, 0.02);
 }
 
+/* FULL PAGE DEPLOYMENT PIPELINE DASHBOARD */
 .sv-pipeline-page-container {
   max-width: 1180px;
   margin: 0 auto;
@@ -12050,6 +12244,7 @@ a:focus {
   align-items: center;
 }
 
+/* ULTRA-MODERN COOKIE & PRIVACY POPUP */
 .sv-cookie-container {
   position: fixed;
   bottom: 24px;
@@ -12256,6 +12451,7 @@ a:focus {
   transform: translateY(-1px);
 }
 
+/* INFO & ABOUT PAGE STYLING */
 .sv-info-page-wrapper {
   max-width: 1140px;
   margin: 0 auto;
@@ -12520,6 +12716,11 @@ a:focus {
 .sv-info-btn-ghost:hover {
   color: #ff5f02;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE DEVICE NOTICE OVERLAY (< 768px)
+   Site is strictly available for Desktop & Tablet only
+   ═══════════════════════════════════════════════════════════════ */
 
 .sv-mobile-block-overlay {
   display: none;
@@ -12788,6 +12989,10 @@ a:focus {
   }
 }
 
+/* ==========================================================================
+   SVG.IO SPLASH SCREEN (Big 45° -> Small 45° -> Rotate to 0° -> Exit)
+   ========================================================================== */
+
 .svgio-splash-overlay {
   position: fixed;
   inset: 0;
@@ -12844,6 +13049,7 @@ a:focus {
   filter: none !important;
 }
 
+/* Keyframes: Big at 45° -> Shrinks to Normal Size at 45° -> Rotates back to 0° */
 @keyframes svgio-splash-scale-rotate {
   0% {
     transform: scale(3.4) rotate(45deg);
@@ -12854,19 +13060,26 @@ a:focus {
     opacity: 1;
   }
   45% {
+    /* Becomes small while staying on 45 degree angle */
     transform: scale(1) rotate(45deg);
     opacity: 1;
   }
   72% {
+    /* Smoothly rotates back toward original position */
     transform: scale(1) rotate(-2deg);
     opacity: 1;
   }
   88%,
   100% {
+    /* Settled in 0 degree original rotation position */
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   IN-SITE BRAND LOADER (Spinning Side Brackets around Square for Loading Icons)
+   ========================================================================== */
 
 .svgio-brand-loader-wrap {
   display: inline-flex;

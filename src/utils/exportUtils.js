@@ -9,7 +9,8 @@ const svgCache = new Map();
 
 
 export async function getExactSvgVariant(iconId, variant = 'default') {
-  const key = `exact_${iconId}_${variant}`;
+  const actualId = typeof iconId === 'object' && iconId ? (iconId.id || iconId.slug) : iconId;
+  const key = `exact_${actualId}_${variant}`;
   if (svgCache.has(key)) {
     return svgCache.get(key);
   }
@@ -22,17 +23,30 @@ export async function getExactSvgVariant(iconId, variant = 'default') {
     }
   } catch {}
 
-  try {
-    const res = await fetch(`/icons/${iconId}/${variant}.svg`);
-    if (res.ok) {
-      const text = await res.text();
-      if (text && text.includes('<svg')) {
-        svgCache.set(key, text);
-        setCachedSvgVector(key, text);
-        return text;
+  const urls = [];
+  if (typeof iconId === 'object' && iconId?.variantPaths?.[variant]) {
+    urls.push(iconId.variantPaths[variant]);
+  }
+  urls.push(`/icons/${actualId}/${variant}.svg`);
+  if (actualId === 'svg-space') {
+    urls.push(`/icons/svgspace/${variant}.svg`);
+  } else if (actualId === 'svgspace') {
+    urls.push(`/icons/svg-space/${variant}.svg`);
+  }
+
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.includes('<svg')) {
+          svgCache.set(key, text);
+          setCachedSvgVector(key, text);
+          return text;
+        }
       }
-    }
-  } catch {}
+    } catch {}
+  }
 
   return null;
 }
@@ -41,12 +55,15 @@ export async function getExactSvgVariant(iconId, variant = 'default') {
 
 
 export async function getSvgContent(iconId, variant = 'default') {
-  const key = `${iconId}/${variant}`;
+  const actualId = typeof iconId === 'object' && iconId ? (iconId.id || iconId.slug) : iconId;
+  const key = `${actualId}/${variant}`;
   
+  // 1. Fast in-memory cache
   if (svgCache.has(key)) {
     return svgCache.get(key);
   }
 
+  // 2. Persistent IndexedDB cache
   try {
     const persisted = await getCachedSvgVector(key);
     if (persisted && persisted.includes('<svg')) {
@@ -55,14 +72,44 @@ export async function getSvgContent(iconId, variant = 'default') {
     }
   } catch {}
 
-  const candidateUrls = [
-    `/icons/${iconId}/${variant}.svg`,
-    `/icons/${iconId}/default.svg`,
-    `/icons/${iconId}/dark.svg`,
-    `/icons/${iconId}/light.svg`,
-    `/icons/${iconId}/mono.svg`,
-    `/icons/${iconId}/wordmark.svg`
-  ];
+  const candidateUrls = [];
+
+  // If passed an icon object with variantPaths, prioritize its explicit variant path
+  if (typeof iconId === 'object' && iconId?.variantPaths?.[variant]) {
+    candidateUrls.push(iconId.variantPaths[variant]);
+  }
+
+  candidateUrls.push(
+    `/icons/${actualId}/${variant}.svg`,
+    `/icons/${actualId}/default.svg`,
+    `/icons/${actualId}/dark.svg`,
+    `/icons/${actualId}/light.svg`,
+    `/icons/${actualId}/mono.svg`,
+    `/icons/${actualId}/wordmark.svg`,
+    `/icons/${actualId}/wordmark-dark.svg`,
+    `/icons/${actualId}/wordmark-light.svg`
+  );
+
+  // SVG SPACE path compatibility (both svg-space and svgspace folders)
+  if (actualId === 'svg-space') {
+    candidateUrls.push(
+      `/icons/svgspace/${variant}.svg`,
+      `/icons/svgspace/default.svg`,
+      `/icons/svgspace/dark.svg`,
+      `/icons/svgspace/light.svg`,
+      `/icons/svgspace/wordmark-dark.svg`,
+      `/icons/svgspace/wordmark-light.svg`
+    );
+  } else if (actualId === 'svgspace') {
+    candidateUrls.push(
+      `/icons/svg-space/${variant}.svg`,
+      `/icons/svg-space/default.svg`,
+      `/icons/svg-space/dark.svg`,
+      `/icons/svg-space/light.svg`,
+      `/icons/svg-space/wordmark-dark.svg`,
+      `/icons/svg-space/wordmark-light.svg`
+    );
+  }
 
   for (const url of candidateUrls) {
     try {
@@ -78,7 +125,7 @@ export async function getSvgContent(iconId, variant = 'default') {
     } catch (e) {}
   }
 
-  console.warn(`No SVG found for ${iconId} (${variant})`);
+  console.warn(`No SVG found for ${actualId} (${variant})`);
   return null;
 }
 
@@ -586,6 +633,7 @@ export async function downloadFavoritesFullZip(favorites = [], zipName = 'svgio-
       const iconId = icon.slug || icon.id;
       if (!iconId) return;
 
+      // 1. Get genuine declared variants for this icon
       let declaredVariants = [];
       if (Array.isArray(icon.variants) && icon.variants.length > 0) {
         declaredVariants = icon.variants;
@@ -595,9 +643,11 @@ export async function downloadFavoritesFullZip(favorites = [], zipName = 'svgio-
         declaredVariants = ['default'];
       }
 
+      // Track hashes of SVGs already added for this icon to prevent any duplicate files
       const seenSvgContents = new Set();
 
       for (const variant of declaredVariants) {
+        // Fetch strictly the exact variant without fallbacks
         let content = await getExactSvgVariant(iconId, variant);
         if (!content && variant === 'default') {
           content = await getSvgContent(iconId, 'default');
@@ -606,10 +656,12 @@ export async function downloadFavoritesFullZip(favorites = [], zipName = 'svgio-
         if (content && content.includes('<svg')) {
           const trimmed = content.trim();
           if (seenSvgContents.has(trimmed)) {
+            // Already bundled identical vector for this icon, avoid duplication
             continue;
           }
           seenSvgContents.add(trimmed);
 
+          // Name file cleanly: ${iconId}.svg if single variant, otherwise ${iconId}-${variant}.svg
           const fileName = (declaredVariants.length === 1 && variant === 'default')
             ? `${iconId}.svg`
             : `${iconId}-${variant}.svg`;

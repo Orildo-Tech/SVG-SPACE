@@ -24,7 +24,8 @@ import {
   Package,
   ShieldCheck,
   Timer,
-  Clock
+  Clock,
+  Scale
 } from "lucide-react";
 import { setCachedSvgVector } from "../utils/dbUtils";
 
@@ -54,7 +55,7 @@ const POPULAR_CATEGORIES = [
 "Social"];
 
 
-const TOTAL_PIPELINE_SECONDS = 420;
+const TOTAL_PIPELINE_SECONDS = 420; // 7 minutes
 
 function formatPipelineTime(seconds) {
   if (seconds <= 0) return '00:00';
@@ -73,7 +74,7 @@ const getSavedActiveSubmission = () => {
       const parsed = JSON.parse(raw);
       if (parsed && parsed.endTime) {
         const remaining = Math.ceil((parsed.endTime - Date.now()) / 1000);
-        if (remaining > -300) {
+        if (remaining > -300) { // Keep accessible up to 5 min after completion
           return {
             submission: parsed,
             countdown: Math.max(0, remaining)
@@ -136,7 +137,7 @@ export function SubmitPage({
   const [brandGuidelinesUrl, setBrandGuidelinesUrl] = useState("");
   const [hexColors, setHexColors] = useState(["FF5F02"]);
   const [detectedHexes, setDetectedHexes] = useState([]);
-  const [license, setLicense] = useState("Apache-2.0");
+  const [license, setLicense] = useState("Public Domain");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [customCategories, setCustomCategories] = useState(() => getSavedCustomCategories());
   const [categoriesList, setCategoriesList] = useState(() => {
@@ -150,6 +151,10 @@ export function SubmitPage({
     return unique;
   });
   const [newCategoryInput, setNewCategoryInput] = useState("");
+
+  const [agreeLicensed, setAgreeLicensed] = useState(false);
+  const [agreePublicDomain, setAgreePublicDomain] = useState(false);
+  const [agreePermanentHosting, setAgreePermanentHosting] = useState(false);
 
   const [variants, setVariants] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -186,20 +191,24 @@ export function SubmitPage({
     const trimmed = newCategoryInput.trim();
     if (!trimmed) return;
 
+    // Capitalize first letters neatly
     const formatted = trimmed
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
+    // Check if category already exists (case-insensitive check)
     const existing = categoriesList.find(
       (c) => c.toLowerCase() === formatted.toLowerCase()
     );
     const finalCat = existing || formatted;
 
+    // Update categoriesList
     if (!categoriesList.some((c) => c.toLowerCase() === finalCat.toLowerCase())) {
       setCategoriesList((prev) => [finalCat, ...prev]);
     }
 
+    // Persist permanently in customCategories state & localStorage
     const updatedCustom = [finalCat, ...customCategories.filter((c) => c.toLowerCase() !== finalCat.toLowerCase())];
     setCustomCategories(updatedCustom);
     saveCustomCategoriesToStorage(updatedCustom);
@@ -642,6 +651,10 @@ export function SubmitPage({
     if (uniqueNames.size !== variantNames.length)
       newErrors.variants = "Each variant must have a unique name (e.g., default, dark, mono)";
 
+    if (!agreeLicensed || !agreePublicDomain || !agreePermanentHosting) {
+      newErrors.agreements = "Please review and accept all 3 contributor agreements before submitting.";
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       onShowToast?.({
@@ -666,12 +679,12 @@ export function SubmitPage({
       rawVariants[variantKey] = v.svgContent;
     });
 
-    const SUPABASE_URL = import.meta.env.VITE_DATABASE_URL || "";
-    const SUPABASE_KEY = import.meta.env.VITE_DATABASE_KEY || "";
+    const SUPABASE_URL = import.meta.env.VITE_DATABASE_URL || "https://wexavetbwvlazhusuouu.supabase.co";
+    const SUPABASE_KEY = import.meta.env.VITE_DATABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndleGF2ZXRid3ZsYXpodXN1b3V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1MDA2NzgsImV4cCI6MjEwMzA3NjY3OH0.dWhB2MYM-yNdmvGIkHRf53tTSsgVD6sFcfY_xIAnEms";
 
     let submittedSuccessfully = false;
 
-
+    // ── Attempt 1: Serverless Cloudflare Function / Local Vite middleware ──
     try {
       const response = await fetch("/api/submit-icon", {
         method: "POST",
@@ -701,6 +714,7 @@ export function SubmitPage({
       console.warn("Direct /api/submit-icon call failed, falling back to Supabase Edge Function:", apiErr);
     }
 
+    // ── Attempt 2: Direct Supabase Edge Function Ingestion Fallback ──
     if (!submittedSuccessfully) {
       try {
         const edgeFnRes = await fetch(`${SUPABASE_URL}/functions/v1/submit-icon`, {
@@ -735,6 +749,7 @@ export function SubmitPage({
     }
 
     try {
+      // Immediate local state hydration & raw vector caching
       const localNewIcon = {
         id: slug,
         slug,
@@ -788,13 +803,17 @@ export function SubmitPage({
       setSubmissionResult(submissionData);
       setCountdown(TOTAL_PIPELINE_SECONDS);
 
+      // Reset form fields
       setIconName("");
       setIconSlug("");
       setWebsiteUrl("");
       setBrandGuidelinesUrl("");
       setHexColors(["FF5F02"]);
       setDetectedHexes([]);
-      setLicense("Apache-2.0");
+      setLicense("Public Domain");
+      setAgreeLicensed(false);
+      setAgreePublicDomain(false);
+      setAgreePermanentHosting(false);
       setSelectedCategories([]);
       setVariants([]);
       setErrors({});
@@ -973,7 +992,7 @@ export function SubmitPage({
 
               <div className="sv-spec-row">
                 <span className="sv-spec-label">LICENSE</span>
-                <span className="sv-spec-badge license">Apache-2.0</span>
+                <span className="sv-spec-badge license">{submissionResult.license || 'Public Domain'}</span>
               </div>
             </div>
 
@@ -1123,6 +1142,7 @@ export function SubmitPage({
             </a>
           </div>
 
+          {/* Schema Preview */}
           <div className="sv-schema-preview-box glass-panel">
             <div className="sv-schema-header">
               <span className="sv-schema-title">Vector Package Schema</span>
@@ -1137,6 +1157,7 @@ export function SubmitPage({
           </div>
         </div>
 
+        {/* Right Column: Form */}
         <div className="sv-submit-right-col">
           <form
             className="sv-submit-form-card glass-panel"
@@ -1539,17 +1560,36 @@ export function SubmitPage({
               </div>
             </div>
 
+            {/* License: Exclusively Public Domain */}
             <div className="sv-form-group">
               <label className="sv-form-label">
                 License <span className="req">*</span>
               </label>
-              <div className="sv-license-display-box">
-                <ShieldCheck size={16} style={{ color: '#10B981', flexShrink: 0 }} />
-                <span className="sv-license-text">Apache 2.0 (Official Open-Source License)</span>
-                <span className="sv-license-badge">APACHE 2.0</span>
+              <div className="sv-license-display-box" style={{ borderColor: 'rgba(16, 185, 129, 0.35)', background: 'rgba(16, 185, 129, 0.04)' }}>
+                <ShieldCheck size={20} style={{ color: '#10B981', flexShrink: 0 }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, flexWrap: 'wrap' }}>
+                    <span className="sv-license-text" style={{ fontWeight: 700, fontSize: '13.5px' }}>
+                      Public Domain License (CC0 1.0 Universal)
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => onNavigate ? onNavigate('license') : window.open('/?view=license', '_self')}
+                      className="sv-license-view-btn"
+                      title="Read official Creative Commons CC0 1.0 Universal Public Domain Dedication"
+                    >
+                      <Scale size={12} />
+                      <span>View License</span>
+                    </button>
+                  </div>
+                  <span style={{ fontSize: '12px', color: 'var(--md-sys-color-on-surface-variant)', lineHeight: 1.45 }}>
+                    All submitted vector assets on SVG SPACE are dedicated to the Public Domain. Free for unrestricted worldwide commercial and personal use with zero copyright restrictions or royalties.
+                  </span>
+                </div>
               </div>
             </div>
 
+            {/* Categories & Multiple Category Creation */}
             <div className="sv-form-group">
               <div className="sv-cat-header-row">
                 <label className="sv-form-label" style={{ marginBottom: 0 }}>
@@ -1565,6 +1605,7 @@ export function SubmitPage({
                 Select one or multiple categories, or create a new custom category for this icon:
               </p>
 
+              {/* Create new category input row */}
               <div className="sv-add-category-row">
                 <input
                   type="text"
@@ -1591,6 +1632,7 @@ export function SubmitPage({
                 </button>
               </div>
 
+              {/* Category pills */}
               <div className="sv-cat-tags-selector">
                 {categoriesList.map((cat) => {
                   const isSelected = selectedCategories.includes(cat);
@@ -1633,6 +1675,96 @@ export function SubmitPage({
                 <span className="sv-field-error" style={{ marginTop: 6, display: 'block' }}>
                   {errors.categories}
                 </span>
+              )}
+            </div>
+
+            {/* Contributor Agreements & Warranties */}
+            <div className="sv-agreements-group">
+              <div className="sv-agreements-header">
+                <Scale size={16} style={{ color: '#FF5F02', flexShrink: 0 }} />
+                <div className="sv-agreements-header-text">
+                  <span className="sv-agreements-title">Contributor Agreements &amp; Declarations</span>
+                  <span className="sv-agreements-subtitle">All 3 declarations are mandatory to publish into the open repository</span>
+                </div>
+                <span className="sv-agreements-badge">REQUIRED</span>
+              </div>
+
+              <div className="sv-agreements-list">
+                {/* Agreement 1: Non-Infringement & Authority */}
+                <label
+                  htmlFor="agree-licensed"
+                  className={`sv-agreement-item ${agreeLicensed ? "checked" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    id="agree-licensed"
+                    checked={agreeLicensed}
+                    onChange={(e) => {
+                      setAgreeLicensed(e.target.checked);
+                      if (errors.agreements) setErrors((prev) => ({ ...prev, agreements: undefined }));
+                    }}
+                    className="sv-agreement-checkbox"
+                  />
+                  <div className="sv-agreement-content">
+                    <span className="sv-agreement-heading">Authority &amp; Non-Infringement Warranty</span>
+                    <p className="sv-agreement-desc">
+                      I confirm and warrant that I am the author or authorized representative with legal rights to publish these vector assets. <strong>I agree NOT to upload any icons, trademarks, or graphics that I am not licensed or authorized to distribute.</strong>
+                    </p>
+                  </div>
+                </label>
+
+                {/* Agreement 2: Public Domain Dedication */}
+                <label
+                  htmlFor="agree-public-domain"
+                  className={`sv-agreement-item ${agreePublicDomain ? "checked" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    id="agree-public-domain"
+                    checked={agreePublicDomain}
+                    onChange={(e) => {
+                      setAgreePublicDomain(e.target.checked);
+                      if (errors.agreements) setErrors((prev) => ({ ...prev, agreements: undefined }));
+                    }}
+                    className="sv-agreement-checkbox"
+                  />
+                  <div className="sv-agreement-content">
+                    <span className="sv-agreement-heading">Public Domain Dedication (CC0 1.0 Universal)</span>
+                    <p className="sv-agreement-desc">
+                      I agree and dedicate this icon and all uploaded variants to the <strong>Public Domain under Creative Commons CC0 1.0 Universal</strong>. I waive all copyright and related rights worldwide, making this item freely available for commercial and personal use.
+                    </p>
+                  </div>
+                </label>
+
+                {/* Agreement 3: Permanent Hosting & Irrevocable Submission */}
+                <label
+                  htmlFor="agree-permanent-hosting"
+                  className={`sv-agreement-item ${agreePermanentHosting ? "checked" : ""}`}
+                >
+                  <input
+                    type="checkbox"
+                    id="agree-permanent-hosting"
+                    checked={agreePermanentHosting}
+                    onChange={(e) => {
+                      setAgreePermanentHosting(e.target.checked);
+                      if (errors.agreements) setErrors((prev) => ({ ...prev, agreements: undefined }));
+                    }}
+                    className="sv-agreement-checkbox"
+                  />
+                  <div className="sv-agreement-content">
+                    <span className="sv-agreement-heading">Permanent Hosting &amp; Irrevocable Archive</span>
+                    <p className="sv-agreement-desc">
+                      I agree that this submission is permanent, irrevocable, and mirrored to the public GitHub repository. <strong>If my user account is deleted, suspended, or closed, the submitted icons cannot be deleted</strong> and will remain permanently accessible in the catalog and open GitHub repository.
+                    </p>
+                  </div>
+                </label>
+              </div>
+
+              {errors.agreements && (
+                <div className="sv-agreements-error">
+                  <AlertCircle size={15} style={{ flexShrink: 0 }} />
+                  <span>{errors.agreements}</span>
+                </div>
               )}
             </div>
 

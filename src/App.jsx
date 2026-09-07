@@ -16,6 +16,7 @@ import NotFoundPage from './components/NotFoundPage';
 import ServerErrorPage from './components/ServerErrorPage';
 import PrivacyPage from './components/PrivacyPage';
 import TermsPage from './components/TermsPage';
+import LicensePage from './components/LicensePage';
 import StatusPage from './components/StatusPage';
 import InfoPage from './components/InfoPage';
 import CookieBanner from './components/CookieBanner';
@@ -32,18 +33,35 @@ import {
 } from './utils/dbUtils';
 import { updatePageSeo } from './utils/seoUtils';
 
+function findIconBySlug(icons, slug) {
+  if (!icons || !slug) return null;
+  const lowerSlug = slug.toLowerCase();
+  return icons.find((i) => {
+    if (i.id === slug || i.slug === slug) return true;
+    if (i.id?.toLowerCase() === lowerSlug || i.slug?.toLowerCase() === lowerSlug) return true;
+    if (Array.isArray(i.aliases) && i.aliases.some((a) => a.toLowerCase() === lowerSlug)) return true;
+    if ((lowerSlug === 'svgspace' || lowerSlug === 'svg-space') && (i.slug === 'svg-space' || i.id === 'svg-space' || i.slug === 'svgspace' || i.id === 'svgspace')) return true;
+    return false;
+  });
+}
+
 export function App() {
   const [metadata, setMetadata] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  
+  // Parse initial state from URL — supports both:
+  //   Clean path:  /icon/react        (shareable)
+  //   Legacy param: /?icon=react      (backwards compat)
   const initialParams = useMemo(() => {
     if (typeof window === 'undefined') return { view: 'icons', category: 'all', search: '', icon: '' };
     const sp = new URLSearchParams(window.location.search);
     const pathname = window.location.pathname;
 
+    // Detect /icon/[slug] path
     const iconPathMatch = pathname.match(/^\/icon\/([^/]+)\/?$/);
     const iconSlug = iconPathMatch ? iconPathMatch[1] : (sp.get('icon') || '');
 
+    // Detect /category/[slug] path
     const catPathMatch = pathname.match(/^\/category\/([^/]+)\/?$/);
     const categorySlug = catPathMatch
       ? decodeURIComponent(catPathMatch[1])
@@ -64,6 +82,7 @@ export function App() {
   const [selectedIcon, setSelectedIcon] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState('default');
 
+
   const [favorites, setFavorites] = useState(() => {
     try {
       const saved = localStorage.getItem('orildo_svg_favorites');
@@ -73,12 +92,14 @@ export function App() {
     }
   });
 
+  // Revalidate favorites from IndexedDB storage
   useEffect(() => {
     let active = true;
     getCachedFavorites().then((cached) => {
       if (active && Array.isArray(cached) && cached.length > 0) {
         setFavorites((prev) => {
           if (prev.length === 0) return cached;
+          // Merge unique
           const ids = new Set(prev.map((f) => f.id || f.slug));
           const additions = cached.filter((c) => !ids.has(c.id || c.slug));
           return additions.length > 0 ? [...prev, ...additions] : prev;
@@ -88,8 +109,10 @@ export function App() {
     return () => { active = false; };
   }, []);
 
+
   const [toast, setToast] = useState(null);
   const toastTimeoutRef = useRef(null);
+
 
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('orildo_svg_theme') || 'dark';
@@ -97,19 +120,23 @@ export function App() {
 
   const searchInputRef = useRef(null);
 
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('orildo_svg_theme', theme);
   }, [theme]);
 
+
   useEffect(() => {
     setCachedFavorites(favorites);
   }, [favorites]);
+
 
   useEffect(() => {
     let isMounted = true;
 
     async function loadIcons() {
+      // 1. Instant Cache Layer (<10ms)
       try {
         const cached = await getCachedCatalog();
         if (cached && isMounted && cached.icons?.length > 0) {
@@ -121,6 +148,7 @@ export function App() {
         console.warn('Cache read error:', e);
       }
 
+      // 2. Network Fetch & Revalidation
       try {
         const res = await fetch('/icons.json');
         if (!res.ok) throw new Error('Failed to load icons.json');
@@ -135,7 +163,7 @@ export function App() {
           icon.hexes.map((h) => h.startsWith('#') ? h : `#${h}`) :
           [hex];
           const url = icon.url || `https://${id}.dev`;
-          const license = icon.license || 'Apache-2.0';
+          const license = icon.license || 'Public Domain';
 
           let variants = [];
           let variantPaths = {};
@@ -215,10 +243,9 @@ export function App() {
           setCachedCatalog(freshCatalog);
           preloadIconBatch(normalized, 48);
 
+          // If URL has ?icon=slug, open it immediately
           if (initialParams.icon) {
-            const found = normalized.find(
-              (i) => i.id === initialParams.icon || i.slug === initialParams.icon
-            );
+            const found = findIconBySlug(normalized, initialParams.icon);
             if (found) {
               setSelectedIcon(found);
             }
@@ -235,6 +262,7 @@ export function App() {
     return () => { isMounted = false; };
   }, []);
 
+  // Dynamic SEO Engine Sync
   useEffect(() => {
     updatePageSeo({
       icon: selectedIcon,
@@ -266,6 +294,7 @@ export function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIcon]);
 
+  // Handle browser back/forward buttons with clean shareable URLs
   useEffect(() => {
     const handlePopState = () => {
       const sp = new URLSearchParams(window.location.search);
@@ -280,7 +309,7 @@ export function App() {
       const view = sp.get('view') || 'icons';
 
       if (iconSlug && metadata && metadata.icons) {
-        const found = metadata.icons.find((i) => i.id === iconSlug || i.slug === iconSlug);
+        const found = findIconBySlug(metadata.icons, iconSlug);
         if (found) setSelectedIcon(found);
       } else {
         setSelectedIcon(null);
@@ -344,9 +373,10 @@ export function App() {
     }
     setSelectedIcon(icon);
     setSelectedVariant(variant);
-    setSearchQuery('');
+    setSearchQuery(''); // Clear search when opening an icon
     try {
       if (icon) {
+        // Clean shareable URL: /icon/[slug]
         const slug = icon.slug || icon.id;
         window.history.pushState(null, '', `/icon/${slug}`);
       } else {
@@ -370,9 +400,10 @@ export function App() {
     setSelectedCategory(category);
     setSelectedIcon(null);
     setCurrentView('icons');
-    setSearchQuery('');
+    setSearchQuery(''); // Clear search when choosing a category
     try {
       if (category && category !== 'all') {
+        // Clean shareable URL: /category/[name]
         window.history.pushState(null, '', `/category/${encodeURIComponent(category)}`);
       } else {
         window.history.pushState(null, '', '/');
@@ -384,7 +415,7 @@ export function App() {
   const handleNavigate = (view) => {
     setCurrentView(view);
     setSelectedIcon(null);
-    setSearchQuery('');
+    setSearchQuery(''); // Clear search when navigating
     try {
       if (view && view !== 'icons') {
         window.history.pushState(null, '', `/?view=${view}`);
@@ -394,6 +425,7 @@ export function App() {
     } catch (e) {}
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   const categoriesWithCounts = useMemo(() => {
     if (!metadata || !metadata.icons) return [];
@@ -495,12 +527,15 @@ export function App() {
       setCachedCatalog(updatedCatalog);
       return updatedCatalog;
     });
+    // Stay on SubmitPage 7-minute timer view so user can track the live ingestion pipeline
   };
 
   return (
     <div className="md-page-wrapper">
+      {/* Brand Splash Screen */}
       <SplashScreen isLoading={isLoading} theme={theme} />
 
+      {/* Top Navigation Header */}
       <Header
         theme={theme}
         toggleTheme={toggleTheme}
@@ -523,7 +558,9 @@ export function App() {
         onSubmitIconClick={handleSubmitIconModal}
         currentView={currentView} />
 
+      {/* Main Layout Container */}
       <div className="md-app-layout">
+        {/* Sidebar Navigation */}
         <Sidebar
           theme={theme}
           categories={categoriesWithCounts}
@@ -541,7 +578,9 @@ export function App() {
           }}
           totalIcons={totalCount} />
 
+        {/* Content Area */}
         <main className="md-main-content">
+          {/* Detailed Icon View */}
           {selectedIcon ?
           <IconDetailPage
             icon={selectedIcon}
@@ -622,6 +661,10 @@ export function App() {
           <TermsPage
             onNavigate={handleNavigate} /> :
 
+          currentView === 'license' || currentView === 'cc0' ?
+          <LicensePage
+            onNavigate={handleNavigate} /> :
+
           currentView === 'status' ?
           <StatusPage
             totalIcons={totalCount}
@@ -632,7 +675,9 @@ export function App() {
             totalIcons={totalCount}
             onNavigate={handleNavigate} /> :
 
+
           <>
+              {}
               {!searchQuery && selectedCategory === 'all' &&
             <Hero
               theme={theme}
@@ -661,6 +706,7 @@ export function App() {
               onResetFilters={resetFilters} />
               )}
 
+              {}
               <CommunityBanner
               totalIcons={totalCount}
               totalVariants={totalCount * 2}
@@ -670,6 +716,7 @@ export function App() {
             </>
           }
 
+          {}
           <Footer
             theme={theme}
             totalIcons={totalCount}
@@ -680,6 +727,7 @@ export function App() {
         </main>
       </div>
 
+      {}
       {toast &&
       <div className="md-snackbar-container">
           <div className="md-snackbar">
@@ -688,8 +736,10 @@ export function App() {
         </div>
       }
 
+      {/* Cookie Banner */}
       <CookieBanner onNavigate={handleNavigate} />
 
+      {/* Mobile Device Notice: strictly available on Desktop and Tablet only */}
       <MobileDeviceNotice />
     </div>);
 

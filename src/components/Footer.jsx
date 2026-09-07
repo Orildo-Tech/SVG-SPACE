@@ -106,6 +106,7 @@ export function Footer({
           <ul className="md-footer-links">
             <li><button onClick={() => onNavigate?.('privacy')}>Privacy Policy</button></li>
             <li><button onClick={() => onNavigate?.('terms')}>Terms of Service</button></li>
+            <li><button onClick={() => onNavigate?.('license')}>CC0 Legal Code</button></li>
             <li><button onClick={() => onNavigate?.('trademark')}>Trademark Policy</button></li>
             <li><button onClick={() => onNavigate?.('status')}>Uptime & Health</button></li>
           </ul>

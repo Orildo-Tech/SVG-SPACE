@@ -23,15 +23,17 @@ export function InfoPage({
 }) {
   return (
     <div className="sv-info-page-wrapper">
+      {/* Hero Header */}
       <div className="sv-info-hero glass-panel">
         <h1 className="sv-info-hero-title">
-          About <span className="text-orange">SVG.IO</span>
+          About <span className="text-orange">SVG SPACE</span>
         </h1>
 
         <p className="sv-info-hero-desc">
-          SVG.IO is the modern, 100% free and open-source <strong>SVG hosting, publishing, and distribution platform</strong>. Upload individual vector icons or entire icon packs, and our processing engine validates, optimizes, packages, and hosts them with dedicated shareable web pages and instant CDN delivery.
+          SVG SPACE is the modern, 100% free and open-source <strong>SVG hosting, publishing, and distribution platform</strong>. Upload individual vector icons or entire icon packs, and our processing engine validates, optimizes, packages, and hosts them with dedicated shareable web pages and instant CDN delivery.
         </p>
 
+        {/* Stats Row */}
         <div className="sv-info-stats-grid">
           <div className="sv-info-stat-card glass-panel">
             <span className="sv-info-stat-num">{totalIcons.toLocaleString()}+</span>
@@ -55,7 +57,9 @@ export function InfoPage({
         </div>
       </div>
 
+      {/* Main Grid Content */}
       <div className="sv-info-sections-grid">
+        {/* Section 1: Hosting & Publishing */}
         <section className="sv-info-card glass-panel">
           <div className="sv-info-card-header">
             <div className="sv-info-icon-box">
@@ -68,7 +72,7 @@ export function InfoPage({
           </div>
 
           <p className="sv-info-text">
-            Anyone can upload individual SVG brand assets or complete icon sets. SVG.IO acts as your free vector cloud host, packaging every icon into an organized distribution network.
+            Anyone can upload individual SVG brand assets or complete icon sets. SVG SPACE acts as your free vector cloud host, packaging every icon into an organized distribution network.
           </p>
 
           <p className="sv-info-text">
@@ -91,6 +95,7 @@ export function InfoPage({
           </div>
         </section>
 
+        {/* Section 2: Ingestion Pipeline */}
         <section className="sv-info-card glass-panel">
           <div className="sv-info-card-header">
             <div className="sv-info-icon-box">
@@ -126,6 +131,7 @@ export function InfoPage({
           </div>
         </section>
 
+        {/* Section 3: Universal Integration */}
         <section className="sv-info-card glass-panel">
           <div className="sv-info-card-header">
             <div className="sv-info-icon-box">
@@ -138,7 +144,7 @@ export function InfoPage({
           </div>
 
           <p className="sv-info-text">
-            Every hosted vector on SVG.IO includes 1-click copyable integration code tailored for <strong>React, React Native, Next.js, Vue, Svelte, HTML, and Data URIs</strong>.
+            Every hosted vector on SVG SPACE includes 1-click copyable integration code tailored for <strong>React, React Native, Next.js, Vue, Svelte, HTML, and Data URIs</strong>.
           </p>
 
           <p className="sv-info-text">
@@ -161,38 +167,44 @@ export function InfoPage({
           </div>
         </section>
 
+        {/* Section 4: Public Domain & Permanent Repository Resilience */}
         <section className="sv-info-card glass-panel">
           <div className="sv-info-card-header">
             <div className="sv-info-icon-box">
               <ShieldCheck size={18} />
             </div>
             <div>
-              <h2 className="sv-info-section-title">Permissive Apache 2.0 &amp; Privacy</h2>
-              <span className="sv-info-section-sub">Commercial-ready rights with zero tracking</span>
+              <h2 className="sv-info-section-title">Public Domain (CC0 1.0) &amp; GitHub Failover</h2>
+              <span className="sv-info-section-sub">Immutable archive, zero link rot &amp; 100% open source</span>
             </div>
           </div>
 
           <p className="sv-info-text">
-            All hosted vectors and community additions are published under permissive <strong>Apache 2.0 licensing</strong>, giving you full freedom for personal, open-source, and commercial projects.
+            All hosted vectors and community additions are dedicated to the <strong>Public Domain under Creative Commons CC0 1.0 Universal</strong>. Anyone can freely use, modify, embed, and commercialize these assets without copyright restrictions or licensing fees.
           </p>
 
           <p className="sv-info-text">
-            We respect developer privacy: our fast <strong>local browser caching</strong> stores favorites and search history entirely on your device with zero invasive telemetry.
+            <strong>Permanent GitHub Failover Resilience:</strong> Every icon, raw SVG, and metadata record is continuously mirrored to our public GitHub repository (<a href="https://github.com/Orildo-Tech/SVG-SPACE" target="_blank" rel="noopener noreferrer" style={{ color: '#FF5F02', textDecoration: 'underline' }}>github.com/Orildo-Tech/SVG-SPACE</a>). If the website or CDN ever goes down, the entire library remains permanently available and versioned. Once cataloged, submissions are permanent and irrevocable to prevent link rot across the web.
           </p>
 
           <div className="sv-info-highlights">
             <div className="sv-info-highlight-item">
               <CheckCircle2 size={15} className="text-emerald" />
-              <span>100% free for commercial apps, design systems, and websites</span>
+              <span>Dedicated to the Public Domain (CC0 1.0) for commercial and private software</span>
             </div>
             <div className="sv-info-highlight-item">
               <CheckCircle2 size={15} className="text-emerald" />
-              <span>Zero tracking cookies, zero keystroke logging, sub-10ms load speed</span>
+              <span>Permanent GitHub failover mirror ensuring assets remain accessible forever</span>
+            </div>
+            <div className="sv-info-highlight-item">
+              <CheckCircle2 size={15} className="text-emerald" />
+              <span>Immutable catalog with zero link rot (submissions cannot be deleted on account closure)</span>
             </div>
           </div>
         </section>
       </div>
 
+      {/* Bottom CTA Card */}
       <div className="sv-info-cta-card glass-panel">
         <div className="sv-info-cta-content">
           <h3 className="sv-info-cta-title">Publish Your Vectors or Explore {totalIcons.toLocaleString()}+ Icons</h3>

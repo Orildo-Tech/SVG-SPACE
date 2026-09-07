@@ -32,8 +32,9 @@ export const IconCard = memo(function IconCard({
   const brandColor = icon?.hex ? icon.hex.startsWith('#') ? icon.hex : `#${icon.hex}` : '#FF5F02';
 
   const handleQuickCopySvg = async (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    const svgText = await getSvgContent(icon.id, selectedVariant);
+    const svgText = await getSvgContent(icon, selectedVariant);
     if (svgText) {
       navigator.clipboard.writeText(svgText);
       setCopiedType('svg');
@@ -47,8 +48,9 @@ export const IconCard = memo(function IconCard({
   };
 
   const handleQuickCopyReact = async (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    const svgText = await getSvgContent(icon.id, selectedVariant);
+    const svgText = await getSvgContent(icon, selectedVariant);
     if (svgText) {
       const reactCode = convertSvgToReact(svgText, icon.name);
       navigator.clipboard.writeText(reactCode);
@@ -63,8 +65,9 @@ export const IconCard = memo(function IconCard({
   };
 
   const handleQuickDownload = async (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    const svgText = await getSvgContent(icon.id, selectedVariant);
+    const svgText = await getSvgContent(icon, selectedVariant);
     if (svgText) {
       downloadSvgFile(svgText, `${icon.id}-${selectedVariant}.svg`);
       onShowToast?.({
@@ -76,6 +79,7 @@ export const IconCard = memo(function IconCard({
   };
 
   const handleFavoriteClick = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     onToggleFavorite(icon);
   };
@@ -87,6 +91,12 @@ export const IconCard = memo(function IconCard({
       href={`/icon/${iconSlug}`}
       className="md-card"
       onClick={(e) => {
+        // If click originated on a button or action toolbar, do NOT navigate
+        if (e.target.closest('button') || e.target.closest('.md-card-top-bar') || e.target.closest('.md-card-hover-toolbar')) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
         if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
           e.preventDefault();
           onSelect(icon, selectedVariant);
@@ -94,13 +104,20 @@ export const IconCard = memo(function IconCard({
       }}
       aria-label={`View ${icon.name} SVG vector icon`}
       onKeyDown={(e) => {
+        if (e.target.closest('button')) return;
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onSelect(icon, selectedVariant);
         }
       }}>
       
-      <div className="md-card-top-bar" onClick={(e) => e.stopPropagation()}>
+      {/* Top Tag & Favorite */}
+      <div
+        className="md-card-top-bar"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}>
         <span className="md-card-single-tag">{categoryName}</span>
 
         <button
@@ -114,6 +131,7 @@ export const IconCard = memo(function IconCard({
         </button>
       </div>
 
+      {/* Icon Graphic Container */}
       <div className="md-card-icon-frame">
         <img
           src={iconUrl}
@@ -132,6 +150,7 @@ export const IconCard = memo(function IconCard({
         
       </div>
 
+      {/* Title & Metadata */}
       <div className="md-card-meta">
         <div className="md-card-title" title={icon.name}>
           {icon.name}
@@ -141,7 +160,13 @@ export const IconCard = memo(function IconCard({
         </div>
       </div>
 
-      <div className="md-card-hover-toolbar" onClick={(e) => e.stopPropagation()}>
+      {/* Hover Actions */}
+      <div
+        className="md-card-hover-toolbar"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}>
         <button
           type="button"
           className={`md-card-action-pill ${copiedType === 'svg' ? 'copied' : ''}`}
@@ -174,8 +199,8 @@ export const IconCard = memo(function IconCard({
           <Download size={14} />
         </button>
       </div>
-    </a>
-  );
+    </a>);
+
 });
 
 export default IconCard;

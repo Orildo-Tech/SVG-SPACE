@@ -124,7 +124,7 @@ export function IconDetailPage({
     let isMounted = true;
 
     async function loadSvg() {
-      const text = await getSvgContent(icon.id, selectedVariant);
+      const text = await getSvgContent(icon, selectedVariant);
       if (isMounted && text) {
         setSvgContent(text);
       }
@@ -150,8 +150,8 @@ export function IconDetailPage({
   }, [svgContent]);
 
 
-  const cliCommand = `npx @orildo/icons add ${icon?.id || ''}`;
-  const cdnUrl = `https://svgspace.sbs/icons/${icon?.id || ''}/${selectedVariant}.svg`;
+  const cliCommand = `npx @svgspace/icons add ${icon?.id || ''}`;
+  const cdnUrl = `svgspace.sbs/icons/${icon?.id || ''}/${selectedVariant}.svg`;
 
 
   const getActiveCode = () => {
@@ -236,24 +236,24 @@ export function IconDetailPage({
     const slug = icon.id || icon.slug;
     const shareUrl = `https://svgspace.sbs/icon/${slug}`;
     const iconName = icon.name || icon.title || slug;
+    // Try native Web Share API first (mobile/Android/iOS)
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({
-          title: `${iconName} SVG Icon — SVG.IO`,
-          text: `Download the free ${iconName} SVG vector icon on SVG.IO — React JSX, Vue, Svelte & PNG export.`,
+          title: `${iconName} SVG Icon — SVG SPACE`,
+          text: `Download the free ${iconName} SVG vector icon on SVG SPACE — React JSX, Vue, Svelte & PNG export.`,
           url: shareUrl
         });
         return;
-      } catch (e) {}
+      } catch (e) { /* fallback to clipboard */ }
     }
-
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopiedShare(true);
       setTimeout(() => setCopiedShare(false), 2000);
       onShowToast?.({
         type: 'success',
-        title: '🔗 Link Copied!',
+        title: 'Link Copied!',
         message: `svgspace.sbs/icon/${slug}`
       });
     } catch (e) {}
@@ -503,6 +503,7 @@ export function IconDetailPage({
 
   return (
     <div className="thesvg-view-page">
+      {/* Top Breadcrumb Navigation & Back Action */}
       <div className="thesvg-top-nav-bar">
         <nav className="thesvg-breadcrumb" aria-label="Breadcrumb">
           <a
@@ -607,7 +608,7 @@ export function IconDetailPage({
 
 
               <img
-                src={`/icons/${icon.id}/${selectedVariant}.svg`}
+                src={icon?.variantPaths?.[selectedVariant] || `/icons/${icon.id}/${selectedVariant}.svg`}
                 alt={icon.name}
                 className="thesvg-preview-img" />
 
@@ -635,6 +636,7 @@ export function IconDetailPage({
 
             <div className="thesvg-meta-divider" />
 
+            {/* Categories */}
             <div className="thesvg-categories-group">
               <span className="thesvg-meta-label">CATEGORIES</span>
               <div className="thesvg-cat-tags">
@@ -1011,6 +1013,7 @@ export function IconDetailPage({
                 }
               </div>
 
+              {/* Share Button — icon-only using site theme */}
               <button
                 type="button"
                 className={`thesvg-action-btn thesvg-share-btn ${copiedShare ? 'copied' : ''}`}
@@ -1040,7 +1043,7 @@ export function IconDetailPage({
                     
                     <div className="thesvg-variant-thumb">
                       <img
-                        src={`/icons/${icon.id}/${v}.svg`}
+                        src={icon?.variantPaths?.[v] || `/icons/${icon.id}/${v}.svg`}
                         alt={v}
                         className="thesvg-mini-svg"
                         onError={(e) => {
@@ -1193,7 +1196,7 @@ export function IconDetailPage({
                 
                   <div className="thesvg-png-preview-wrap">
                     <img
-                    src={`/icons/${icon.id}/${selectedVariant}.svg`}
+                    src={icon?.variantPaths?.[selectedVariant] || `/icons/${icon.id}/${selectedVariant}.svg`}
                     alt={`${size}px preview`}
                     style={{
                       width: Math.min(size, 48),
